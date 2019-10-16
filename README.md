@@ -5,12 +5,14 @@ All I know about SSH :  my personal memo
 
 # `The complete FileSystem Permissions Setup
 
+(credits to https://gist.github.com/grenade/6318301 )
+
 * `generate-ssh-key.sh` :
 
 ```bash
-ssh-keygen -t rsa -b 4096 -N '' -C "rthijssen@gmail.com" -f ~/.ssh/id_rsa
-ssh-keygen -t rsa -b 4096 -N '' -C "rthijssen@gmail.com" -f ~/.ssh/github_rsa
-ssh-keygen -t rsa -b 4096 -N '' -C "rthijssen@gmail.com" -f ~/.ssh/mozilla_rsa
+ssh-keygen -t rsa -b 4096 -N '' -C "jblasselle@gopeg.io" -f ~/.ssh/id_rsa
+ssh-keygen -t rsa -b 4096 -N '' -C "jblasselle@gopeg.io" -f ~/.ssh/github_rsa
+ssh-keygen -t rsa -b 4096 -N '' -C "jblasselle@gopeg.io" -f ~/.ssh/mozilla_rsa
 ```
 
 * `ssh-key-add.sh` :
