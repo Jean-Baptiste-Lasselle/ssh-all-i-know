@@ -252,7 +252,9 @@ ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
 set +x
 
 echo "list of [/etc/ssh/ssh_host_*] files : "
-ls -allh
+ls -allh /etc/ssh/ssh_host_*
+
+
 
 ```
   * execute the following :
