@@ -2,6 +2,40 @@
 
 All I know about SSH :  my personal memo
 
+# Resume this memo edition 
+
+```bash
+export WORK_FOLDER=~/ssh-all-i-know.dev
+export SSH_URI_TO_THIS_REPO=git@github.com:Jean-Baptiste-Lasselle/ssh-all-i-know.git
+
+export COMMIT_MESSAGE=""
+export COMMIT_MESSAGE="$COMMIT_MESSAGE Reprise du travail sur [$SSH_URI_TO_THIS_REPO]"
+
+initializeIAAC $SSH_URI_TO_THIS_REPO $WORK_FOLDER
+
+atom .
+# git add --all && git commit -m "$COMMIT_MESSAGE" && git push -u origin master
+
+```
+
+* (if u dont have th iaac bash plugin installed, and the `initializeIAAC` command) : 
+
+```bash
+export WORK_FOLDER=~/ssh-all-i-know.dev
+export SSH_URI_TO_THIS_REPO=git@github.com:Jean-Baptiste-Lasselle/ssh-all-i-know.git
+
+export COMMIT_MESSAGE=""
+export COMMIT_MESSAGE="$COMMIT_MESSAGE Reprise du travail sur [$SSH_URI_TO_THIS_REPO]"
+
+git clone $SSH_URI_TO_THIS_REPO $WORK_FOLDER
+
+cd $WORK_FOLDER
+git status
+
+atom .
+# git add --all && git commit -m "$COMMIT_MESSAGE" && git push -u origin master
+
+```
 
 # `The complete FileSystem Permissions Setup
 
