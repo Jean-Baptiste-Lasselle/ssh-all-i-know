@@ -2,6 +2,12 @@
 
 All this `README.md` is to credit to https://github.com/monteilhet/ssh
 
+I kept this  file cause it's a typical _sysadmin_ cheat sheet :
+* So there I find all typical flaws, so it's test data for security management system design
+* And There I find quite a good overview of the common business cases, with their tasks and challenges, for an average sysadmin.
+
+Here we almost have a technical doc for a real world infra.
+
 
 
 
