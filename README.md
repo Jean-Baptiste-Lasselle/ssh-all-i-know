@@ -305,4 +305,22 @@ main logical steps :
 * Integration with HashiCorp Vault SSH Key management.
 
 
-### A few compressed notes
+### A few compressed notes on teleport
+
+Trying a setup with `teleport` :
+
+https://github.com/gravitational/teleport
+
+Looks great n sexy, love the feature list, and business cases described.
+
+
+* I'll focus on the  SSH Bastion feature of teleport, with :
+  * standard bastion ssh conection tests
+  * **SSH-over-HTTPS** : mandatory,if not most important test to setup, goal is to reach `DCIM` solution
+* I'll focus on the on autdit features on ssh access and kubectl history,
+* I'll add a monitoring solution based on :
+  * `Elastic Beats` + `Prometheus exporters ` as data collector, logged based and time series based
+  *  monitoring data displayed with :
+    * one `Grafana` Dashboard _`SSH` Access Control Audit_
+    * one `Grafana` Dashboard _`kubectl` Access Control Audit_
+* To finish with, I'll add `teleport`'s extras features : sftp
