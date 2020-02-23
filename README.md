@@ -225,16 +225,18 @@ echo ''
 echo ''
 echo ' +++>> This is a simple shell script'
 echo " All that script does is executing on [$(hostname)] : "
-echo "ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub"
 echo ''
-echo "Ok so now the fingerprint of the ssh host on [$(hostname)] is : "
+echo "ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub"
+echo "ssh-keygen -l -f ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub"
+echo ''
+echo "Ok so now the RSA fingerprint of the ssh host on [$(hostname)] is : "
 echo ''
 set -x
 ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
 set +x
 
-echo 'autre : '
-
+echo ''
+echo "Ok so now the ECDSA fingerprint of the ssh host on [$(hostname)] is : "
 echo ''
 
 set -x
@@ -248,16 +250,15 @@ export GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY=$(mktemp)
 export HOSTNAME_TO_TEST=pegasusio.io
 ssh-keyscan $HOSTNAME_TO_TEST > $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY 2> /dev/null
 
-echo "Frist, on the client side : we can grab [${HOSTNAME_TO_TEST}]'s SSH host public RSA key, and calculate its [fingerprint], like this : "
-set +x
+echo "First, on the client side : we can grab [${HOSTNAME_TO_TEST}]'s SSH host public RSA key, and calculate its [fingerprint], like this : "
+
 ssh-keygen -l -f $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
-set -x
 
 echo "Press any key to proceed"
 read waithere1
 
 echo "Then, on the server side : we can ssh connect into [${HOSTNAME_TO_TEST}], and run [ssh-keygen -l -f ] directly on the content of the file [/etc/ssh/ssh_host_rsa_key.pub]  "
-set +x
+ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh
 
 rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
 
