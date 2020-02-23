@@ -243,6 +243,16 @@ set -x
 ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
 set +x
 
+echo ''
+echo "Ok so now the ED25519 fingerprint of the ssh host on [$(hostname)] is : "
+echo ''
+
+set -x
+ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
+set +x
+
+echo "list of [/etc/ssh/ssh_host_*] files : "
+ls -allh
 
 ```
   * execute the following :
@@ -250,15 +260,19 @@ set +x
 export GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY=$(mktemp)
 export HOSTNAME_TO_TEST=pegasusio.io
 ssh-keyscan $HOSTNAME_TO_TEST > $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY 2> /dev/null
-
+echo ''
 echo "First, on the client side : we can grab [${HOSTNAME_TO_TEST}]'s SSH host public RSA key, and calculate its [fingerprint], like this : "
+echo ''
 
 ssh-keygen -l -f $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
+echo ''
 
 echo "Press any key to proceed"
-read waithere1
+# read waithere1
+echo ''
 
 echo "Then, on the server side : we can ssh connect into [${HOSTNAME_TO_TEST}], and run [ssh-keygen -l -f ] directly on the content of the file [/etc/ssh/ssh_host_rsa_key.pub]  "
+echo ''
 ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh
 
 rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
