@@ -165,6 +165,7 @@ ssh-keygen -Lf /etc/ssh/ssh_host_rsa_key.pub || echo "" && echo "so here is the 
 ```bash
 # - on the machine you ssh from
 export SOME_MACHINE_HOSTNAME=myarduinoserver1
+
 ssh-keygen -Lf /etc/ssh/ssh_host_rsa_key.pub || echo "" && echo "so here is the signature of the public key: " && echo "" &&  ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
 # You coud execute this command on any RSA public key
 # file, even [~/.ssh/id_rsa.pub]
@@ -174,9 +175,11 @@ ssh-keygen -Lf /etc/ssh/ssh_host_rsa_key.pub || echo "" && echo "so here is the 
 ```
 
 
-# Signed SSH key management
+# Signed SSH key management with HashiCorp Vault
 
 Following scenario at : https://www.vaultproject.io/docs/secrets/ssh/signed-ssh-certificates/
+
+What the SSH clients use to everyday use their SSHkye that can expire : https://github.com/hashicorp/vault-ssh-helper
 
 main logical steps :
 * **step zero** setup the `certification authority` service which will _certify_ authenticity of `SSH` public keys
@@ -189,3 +192,16 @@ main logical steps :
 * **step three** (_ssh sources_ configuration) configure all the machine fromwhich you want to ssh into other machines.
 
 ###
+
+
+# The SSH Bastion, and HashiCorp Vault expirable SSH Key management
+
+
+### Towards a production setup
+
+* Existing solutions / standards in th scope of ssh bastions, reagarless of any specific SSH Key management policy in place in a given organization, or `HashiCorp Vault`.
+* Main business cases, still regardless of any SSH key  management policy choice, or `HashiCorp Vault`.
+* Integration with HashiCorp Vault SSH Key management.
+
+
+### A few compressed notes
