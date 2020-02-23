@@ -150,7 +150,7 @@ chmod 644 ~/.ssh/mozilla_rsa.pub
   * on `SOME_MACHINE_HOSTNAME`, there is a public RSA key at `/etc/ssh/ssh_host_rsa_key.pub`
   * when, from  `MY_USUAL_WORKSTATION` , you try and ssh into `SOME_MACHINE_HOSTNAME`, the ssh client on `MY_USUAL_WORKSTATION` grabs the public key at `/etc/ssh/ssh_host_rsa_key.pub` on `SOME_MACHINE_HOSTNAME`, and computes its fingerprint, using either the `ssh-keygen -lf `, or the `ssh-keygen -Lf ` command.  This fingerprint is compared to another fingerprint : computed by the ssh client, using the `~/.ssh/known_hosts` to check the identity of the machine you are connecting to with `ssh` protocol
 * when you ssh into `export SOME_MACHINE_HOSTNAME=myarduinoserver1`, the openssh server
-  *  on the machine your ssh int, e.g. `export SOME_MACHINE_I_SSH_INTO=myarduinoserver1` :
+  *  on the machine you ssh into, e.g. `export SOME_MACHINE_I_SSH_INTO=myarduinoserver1` :
 ```bash
 # - on the machine you ssh into
 ssh-keygen -Lf /etc/ssh/ssh_host_rsa_key.pub || echo "" && echo "so here is the signature of the public key: " && echo "" &&  ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
@@ -160,7 +160,7 @@ ssh-keygen -Lf /etc/ssh/ssh_host_rsa_key.pub || echo "" && echo "so here is the 
 # Indeed it's the host, not the client's, key, which fingerprint is computed by the ssh client, to check the identity of the machine you are connecting to with ssh protocol
 
 ```
-  *  on the machine **from which** your `ssh` into `export SOME_MACHINE_I_SSH_INTO=myarduinoserver1` :
+  *  on the machine **from which** you `ssh` into `export SOME_MACHINE_I_SSH_INTO=myarduinoserver1` :
 
 ```bash
 # - on the machine you ssh from
