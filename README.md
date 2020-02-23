@@ -241,6 +241,7 @@ echo ''
 
 set -x
 ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+set +x
 
 
 ```
