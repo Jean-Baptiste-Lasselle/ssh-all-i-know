@@ -174,6 +174,46 @@ ssh-keygen -Lf /etc/ssh/ssh_host_rsa_key.pub || echo "" && echo "so here is the 
 
 ```
 
+### SSH Keyscanning
+
+```bash
+rm -f ~/.ssh/known_hosts
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+
+cat ~/.ssh/known_hosts
+
+echo "Provided you registered your public SSH RSA key for your gitlab.com's and github.com's user accounts"
+ssh -Tai ~/.ssh/id_rsa git@gitlab.com
+ssh -Tai ~/.ssh/id_rsa git@github.com
+
+
+```
+* example output :
+
+```
+jbl@poste-devops-jbl-16gbram:~$ ssh-keyscan gitlab.com
+# gitlab.com:22 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
+# gitlab.com:22 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
+# gitlab.com:22 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
+jbl@poste-devops-jbl-16gbram:~$ ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+# gitlab.com:22 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+# gitlab.com:22 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+# gitlab.com:22 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
+jbl@poste-devops-jbl-16gbram:~$ ssh-keyscan github.com >> ~/.ssh/known_hosts
+# github.com:22 SSH-2.0-babeld-17f81433
+# github.com:22 SSH-2.0-babeld-17f81433
+# github.com:22 SSH-2.0-babeld-17f81433
+
+jbl@poste-devops-jbl-16gbram:~$ ssh -Tai ~/.ssh/id_rsa git@gitlab.com
+Welcome to GitLab, @pegasus.devops!
+jbl@poste-devops-jbl-16gbram:~$ ssh -Tai ~/.ssh/id_rsa git@github.com
+Hi Jean-Baptiste-Lasselle! You've successfully authenticated, but GitHub does not provide shell access.
+jbl@poste-devops-jbl-16gbram:~$
+```
 
 # Signed SSH key management with HashiCorp Vault
 
