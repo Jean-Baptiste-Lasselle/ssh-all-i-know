@@ -294,6 +294,7 @@ echo"rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY"
 
 echo ''
 echo 'Bloopers : '
+echo ''
 export HOSTNAME_TO_TEST=gitlab.com
 ssh-keyscan $HOSTNAME_TO_TEST > ~/.ssh/known_hosts
 export HOSTNAME_TO_TEST=github.com
@@ -306,11 +307,13 @@ ssh-keygen -l -f ~/.ssh/known_hosts | grep 'github'
 echo ''
 ssh-keygen -l -f ~/.ssh/known_hosts | grep 'gitlab'
 
-
+echo "Now Look at the three signatures outputed above on [${HOSTNAME_TO_TEST}] :  "
+echo ''
+cat ./output.remote.test | grep SHA256
 ```
+* So basically, the `fingerprint` isused to compare remote SSH HOST PUB KEY  and  referenced known hosts in ssh client configuration  (generally `~/.ssh/known_hosts` on `*nix` systems)
 
-
-* example output :
+* sample output of `ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh` :
 
 ```
 jbl@poste-devops-jbl-16gbram:~$ ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh
