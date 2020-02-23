@@ -260,6 +260,7 @@ ls -allh /etc/ssh/ssh_host_*
 export GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY=$(mktemp)
 export HOSTNAME_TO_TEST=pegasusio.io
 ssh-keyscan $HOSTNAME_TO_TEST > $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY 2> /dev/null
+ssh-keyscan $HOSTNAME_TO_TEST > ~/.ssh/known_hosts
 echo ''
 echo "First, on the client side : we can grab [${HOSTNAME_TO_TEST}]'s SSH host public RSA key, and calculate its [fingerprint], like this : "
 echo ''
@@ -273,9 +274,38 @@ echo ''
 
 echo "Then, on the server side : we can ssh connect into [${HOSTNAME_TO_TEST}], and run [ssh-keygen -l -f ] directly on the content of the file [/etc/ssh/ssh_host_rsa_key.pub]  "
 echo ''
-ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh
+ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh | tee -a ./output.remote.test
 
-rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
+
+echo "Look at the three signatures outputed above on [${HOSTNAME_TO_TEST}] :  "
+echo ''
+cat ./output.remote.test | grep SHA256
+echo ''
+echo "Finally, back on the client side : "
+echo "  we can display all fingerprints of all 'known hosts' referenced in [~/.ssh/known_hosts], by executing :[ssh-keygen -l -f ~/.ssh/known_hosts]"
+echo "  And compare what s displayed, with the fingerprint calculated  by grabbing the remote SSH HOST PUB KEY  "
+echo ''
+ssh-keygen -l -f ~/.ssh/known_hosts
+
+echo ''
+echo 'Tear down : '
+echo"rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY"
+
+
+echo ''
+echo 'Bloopers : '
+export HOSTNAME_TO_TEST=gitlab.com
+ssh-keyscan $HOSTNAME_TO_TEST > ~/.ssh/known_hosts
+export HOSTNAME_TO_TEST=github.com
+ssh-keyscan $HOSTNAME_TO_TEST > ~/.ssh/known_hosts
+
+echo ''
+ssh-keygen -l -f ~/.ssh/known_hosts | grep -vE 'gitlab|github'
+echo ''
+ssh-keygen -l -f ~/.ssh/known_hosts | grep 'github'
+echo ''
+ssh-keygen -l -f ~/.ssh/known_hosts | grep 'gitlab'
+
 
 ```
 
