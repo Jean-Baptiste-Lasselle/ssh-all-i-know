@@ -215,6 +215,67 @@ Hi Jean-Baptiste-Lasselle! You've successfully authenticated, but GitHub does no
 jbl@poste-devops-jbl-16gbram:~$
 ```
 
+
+* checking fingerprint :
+  * create a file `test.sh`, and add the following content into it  :
+```bash
+#!/bin/bash
+
+echo ''
+echo ''
+echo ' +++>> This is a simple shell script'
+echo " All that script does is executing on [$(hostname)] : "
+echo "ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub"
+echo ''
+echo "Ok so now the fingerprint of the ssh host on [$(hostname)] is : "
+echo ''
+set -x
+ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
+set +x
+
+echo 'autre : '
+
+echo ''
+
+set -x
+ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+
+
+```
+  * execute the following :
+```bash
+export GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY=$(mktemp)
+export HOSTNAME_TO_TEST=pegasusio.io
+ssh-keyscan $HOSTNAME_TO_TEST > $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY 2> /dev/null
+
+echo "Frist, on the client side : we can grab [${HOSTNAME_TO_TEST}]'s SSH host public RSA key, and calculate its [fingerprint], like this : "
+set +x
+ssh-keygen -l -f $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
+set -x
+
+echo "Press any key to proceed"
+read waithere1
+
+echo "Then, on the server side : we can ssh connect into [${HOSTNAME_TO_TEST}], and run [ssh-keygen -l -f ] directly on the content of the file [/etc/ssh/ssh_host_rsa_key.pub]  "
+set +x
+
+rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
+
+```
+
+
+* example output :
+
+```
+$ file=$(mktemp)
+$ ssh-keyscan host > $file 2> /dev/null
+$ ssh-keygen -l -f $file
+521 de:ad:be:ef:de:ad:be:ef:de:ad:be:ef:de:ad:be:ef host (ECDSA)
+4096 8b:ad:f0:0d:8b:ad:f0:0d:8b:ad:f0:0d:8b:ad:f0:0d host (RSA)
+$ rm $file
+```
+
+
 # Signed SSH key management with HashiCorp Vault
 
 Following scenario at : https://www.vaultproject.io/docs/secrets/ssh/signed-ssh-certificates/
