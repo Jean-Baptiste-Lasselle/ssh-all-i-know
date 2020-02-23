@@ -254,8 +254,6 @@ set +x
 echo "list of [/etc/ssh/ssh_host_*] files : "
 ls -allh /etc/ssh/ssh_host_*
 
-
-
 ```
   * execute the following :
 ```bash
@@ -285,12 +283,49 @@ rm $GRABBED_REMOTE_MACHINES_SSH_HOST_PUB_KEY
 * example output :
 
 ```
-$ file=$(mktemp)
-$ ssh-keyscan host > $file 2> /dev/null
-$ ssh-keygen -l -f $file
-521 de:ad:be:ef:de:ad:be:ef:de:ad:be:ef:de:ad:be:ef host (ECDSA)
-4096 8b:ad:f0:0d:8b:ad:f0:0d:8b:ad:f0:0d:8b:ad:f0:0d host (RSA)
-$ rm $file
+jbl@poste-devops-jbl-16gbram:~$ ssh -i ~/.ssh/id_rsa $(whoami)@${HOSTNAME_TO_TEST} < test.sh
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Linux poste-devops-typique 4.9.0-12-amd64 #1 SMP Debian 4.9.210-1 (2020-01-20) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+
+
+ +++>> This is a simple shell script
+ All that script does is executing on [poste-devops-typique] :
+
+ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
+ssh-keygen -l -f ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+
+Ok so now the RSA fingerprint of the ssh host on [poste-devops-typique] is :
+
++ ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
+2048 SHA256:5RTaTSYFV5OjIGmIrGhxm+F3IqUCcVP7pnR/E8YNx0w root@poste-devops-typique (RSA)
+
++ set +x
+Ok so now the ECDSA fingerprint of the ssh host on [poste-devops-typique] is :
+
++ ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+256 SHA256:2PVf9IRs3wPWV5Ch9m2yZM3DmRoF4UMwBoE1oB7evf8 root@poste-devops-typique (ECDSA)
++ set +x
+
+Ok so now the ED25519 fingerprint of the ssh host on [poste-devops-typique] is :
+
++ ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
+256 SHA256:enNfv4K8BFESAU0ohF9L5UfEGozUWRZliK+hkMSzJUs root@poste-devops-typique (ED25519)
++ set +x
+list of [/etc/ssh/ssh_host_*] files :
+-rw------- 1 root root  227 févr. 22 20:30 /etc/ssh/ssh_host_ecdsa_key
+-rw-r--r-- 1 root root  187 févr. 22 20:30 /etc/ssh/ssh_host_ecdsa_key.pub
+-rw------- 1 root root  419 févr. 22 20:30 /etc/ssh/ssh_host_ed25519_key
+-rw-r--r-- 1 root root  107 févr. 22 20:30 /etc/ssh/ssh_host_ed25519_key.pub
+-rw------- 1 root root 1,7K févr. 22 20:30 /etc/ssh/ssh_host_rsa_key
+-rw-r--r-- 1 root root  407 févr. 22 20:30 /etc/ssh/ssh_host_rsa_key.pub
+jbl@poste-devops-jbl-16gbram:~$
 ```
 
 
