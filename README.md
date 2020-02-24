@@ -378,7 +378,11 @@ main logical steps :
 
 * **step three** (_ssh sources_ configuration) configure all the machine fromwhich you want to ssh into other machines.
 
-###
+
+### Github, Gitlab, and client certificates `SSH`-authentication
+
+* Github, [since August 2019](https://github.blog/2019-08-14-ssh-certificate-authentication-for-github-enterprise-cloud/) in its Entreprise plan, supports client certificates `SSH`-authentication
+* I haven't checked for Gitlab.com, I have read discussions about the subject, dating back to year `2018`
 
 
 # The SSH Bastion, and HashiCorp Vault expirable SSH Key management
